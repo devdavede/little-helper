@@ -122,3 +122,7 @@ sudo apt install postgresql postgresql-contrib -y
 sudo systemctl start postgresql
 sudo systemctl enable postgresql
 "
+
+ssh "$USERNAME@$DOMAIN" "
+sudo reboot
+"
