@@ -20,6 +20,7 @@ CONF_FILE="/etc/apache2/sites-available/\$SITE_NAME.conf"
 sudo mkdir -p "\$DOC_ROOT"
 sudo touch "\$DOC_ROOT/index.html"
 sudo chown -R www-data:www-data "\$DOC_ROOT"
+sudo chmod -R g+w "\$DOC_ROOT"
 
 # Write Apache virtual host file
 sudo tee "\$CONF_FILE" > /dev/null <<EOL
