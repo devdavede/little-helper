@@ -104,9 +104,19 @@ sudo iptables -A INPUT -p tcp --dport 443 -j ACCEPT
 sudo netfilter-persistent save
 "
 
+
 # Install Apache
 ssh "$USERNAME@$DOMAIN" "
 sudo apt install apache2 -y
+"
+
+# Set Server IP (Local IP is sufficient when using vHosts)
+ssh "$USERNAME@$DOMAIN" '
+  grep -q "ServerName" /etc/apache2/apache2.conf || echo "ServerName 127.0.0.1" | sudo tee -a /etc/apache2/apache2.conf > /dev/null
+'
+
+# Start Apache
+ssh "$USERNAME@$DOMAIN" "
 sudo systemctl start apache2
 sudo systemctl enable apache2
 "
@@ -123,10 +133,6 @@ sudo apt install postgresql postgresql-contrib -y
 sudo systemctl start postgresql
 sudo systemctl enable postgresql
 "
-
-ssh "$USERNAME@$DOMAIN" '
-  grep -q "ServerName" /etc/apache2/apache2.conf || echo "ServerName 127.0.0.1" | sudo tee -a /etc/apache2/apache2.conf > /dev/null
-'
 
 ssh "$USERNAME@$DOMAIN" "
 sudo reboot
