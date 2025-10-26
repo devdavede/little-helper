@@ -19,8 +19,6 @@ CONF_FILE="/etc/apache2/sites-available/\$SITE_NAME.conf"
 # Ensure document root exists
 sudo mkdir -p "\$DOC_ROOT"
 sudo touch "\$DOC_ROOT/index.html"
-sudo chown -R www-data:www-data "\$DOC_ROOT"
-sudo chmod -R g+w "\$DOC_ROOT"
 
 # Write Apache virtual host file
 sudo tee "\$CONF_FILE" > /dev/null <<EOL
@@ -132,6 +130,10 @@ ssh "$USERNAME@$DOMAIN" "sudo apt install certbot python3-certbot-apache -y"
 
 # Create virtual hosts + SSL
 create_vhost "example.com" "/var/log/apache2"
+
+# Give proper permissions
+ssh "$USERNAME@$DOMAIN" "sudo chown -R www-data:www-data /var/www/html"
+ssh "$USERNAME@$DOMAIN" "sudo chmod -R g+w /var/www/html"
 
 # Install PostgreSQL
 ssh "$USERNAME@$DOMAIN" "
