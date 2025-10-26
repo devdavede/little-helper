@@ -7,8 +7,8 @@
 
 create_vhost() {
     local SITE_NAME="$1"
-    local DOC_ROOT="$2"
-    local LOG_DIR="$3"
+    local DOC_ROOT="/var/www/$1"
+    local LOG_DIR="$2"
 
     ssh "$USERNAME@$DOMAIN" "bash -s" <<ENDSSH
 SITE_NAME="$SITE_NAME"
@@ -131,7 +131,7 @@ sudo adduser $USERNAME www-data
 ssh "$USERNAME@$DOMAIN" "sudo apt install certbot python3-certbot-apache -y"
 
 # Create virtual hosts + SSL
-create_vhost "example.com" "/var/www/example.com" "/var/log/apache2"
+create_vhost "example.com" "/var/log/apache2"
 
 # Install PostgreSQL
 ssh "$USERNAME@$DOMAIN" "
