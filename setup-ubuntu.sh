@@ -72,7 +72,7 @@ ssh "$ROOT_USERNAME@$DOMAIN" "sudo apt update -y && sudo apt upgrade -y"
 # Create user $USERNAME with sudo
 ssh "$ROOT_USERNAME@$DOMAIN" "sudo adduser --disabled-password --gecos '' $USERNAME"
 ssh "$ROOT_USERNAME@$DOMAIN" "sudo usermod -aG sudo $USERNAME"
-ssh "$ROOT_USERNAME@$DOMAIN" "echo '$USERNAME ALL=(ALL) NOPASSWD:ALL' | sudo tee /etc/sudoers.d/$USERNAME"
+ssh "$ROOT_USERNAME@$DOMAIN" "echo '$USERNAME ALL=(ALL:ALL) NOPASSWD:ALL' > "/etc/sudoers.d/$USERNAME"
 ssh "$ROOT_USERNAME@$DOMAIN" "sudo chmod 440 /etc/sudoers.d/$USERNAME"
 
 # Set password for $USERNAME interactively
