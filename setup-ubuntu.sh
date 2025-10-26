@@ -121,6 +121,11 @@ sudo systemctl start apache2
 sudo systemctl enable apache2
 "
 
+# Add user to group www-data
+ssh "$USERNAME@$DOMAIN" "
+sudo adduser $USERNAME www-data
+"
+
 # Install Certbot
 ssh "$USERNAME@$DOMAIN" "sudo apt install certbot python3-certbot-apache -y"
 
