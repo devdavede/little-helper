@@ -1,6 +1,7 @@
 ### PLEASE - UNDERSTAND WHAT THIS SCRIPT DOES BEFORE RUNNING ###
 ### THIS IS MY LITTLE HELPER TO SETUP A FRESH UBUNTU ENVIRONMENT ###
 ### CHECK THE CALLS OF create_vhost() AND ADD YOUR OWN DOMAINS ###
+### RUN THIS SCRIPT FROM YOUR LOCAL MACHINE ###
 
 #!/bin/bash
 
@@ -122,6 +123,10 @@ sudo apt install postgresql postgresql-contrib -y
 sudo systemctl start postgresql
 sudo systemctl enable postgresql
 "
+
+ssh "$USERNAME@$DOMAIN" '
+  grep -q "ServerName" /etc/apache2/apache2.conf || echo "ServerName 127.0.0.1" | sudo tee -a /etc/apache2/apache2.conf > /dev/null
+'
 
 ssh "$USERNAME@$DOMAIN" "
 sudo reboot
